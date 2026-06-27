@@ -1,0 +1,4 @@
+# Generated/runtime files — never commit these
+settings.json
+*.bak
+*.log

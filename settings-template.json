@@ -1,0 +1,34 @@
+{
+  "model": "sonnet",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File {{CLAUDE_DIR}}/notify.ps1 -Message \"task done\""
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File {{CLAUDE_DIR}}/notify.ps1 -Message \"waiting for your input\""
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "\"C:/Program Files/Git/bin/bash.exe\" {{CLAUDE_DIR}}/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "figma@claude-plugins-official": true
+  },
+  "autoUpdatesChannel": "latest",
+  "theme": "dark"
+}
