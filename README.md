@@ -1,6 +1,6 @@
 # claude-config
 
-Personal [Claude Code](https://claude.ai/code) configuration — hooks, status line, agents, and skills for the `/implement` workflow.
+Personal [Claude Code](https://claude.ai/code) configuration — hooks, status line, agents, the `/implement` workflow, and skills for 3D-printed maker projects.
 
 ## What's included
 
@@ -13,6 +13,13 @@ Personal [Claude Code](https://claude.ai/code) configuration — hooks, status l
 | `statusline-command.sh` | Status line showing branch, model, and token usage |
 | `agents/` | Implement workflow sub-agents (planner, architect, UI designer, implementer, reviewer, tester) |
 | `skills/implement/` | `/implement` skill that orchestrates the agent pipeline |
+| `skills/cad-validation/` | Buildability checks for scripted FreeCAD parts (`cadcheck.py`): attached, reachable, fastenable, supported |
+| `skills/cad-review/` | `/cad-review`: independent pre-print review of the exported STLs (`cadreview.py`, run with `freecadcmd`), ending in READY / COUPON FIRST / NOT READY |
+| `skills/print-settings/` | `/print-settings`: a Bambu Studio settings sheet from the build report |
+| `skills/bom/` | `/bom`: a full bill of materials derived from the geometry; checks it against [maker-inventory](https://github.com/AlbinOdelstav/maker-inventory) when that skill is installed |
+
+The maker skills assume FreeCAD (scripted builds) and default to a Bambu Lab P1S with a 0.4 mm
+nozzle and PLA. Name another printer in your `CLAUDE.md` and they use that instead.
 
 ## Prerequisites
 

@@ -1,4 +1,7 @@
 # Generated/runtime files — never commit these
 settings.json
 *.bak
+*.bak-*
 *.log
+__pycache__/
+*.pyc

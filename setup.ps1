@@ -15,7 +15,7 @@ $ClaudeDirFwd = $ClaudeDir.Replace('\', '/')
 Write-Host "Installing Claude Code config to: $ClaudeDir"
 
 # Ensure target directories exist
-foreach ($sub in @('', 'agents', 'skills', 'skills\implement')) {
+foreach ($sub in @('', 'agents', 'skills')) {
     New-Item -ItemType Directory -Force -Path (Join-Path $ClaudeDir $sub) | Out-Null
 }
 
@@ -37,10 +37,15 @@ Get-ChildItem (Join-Path $RepoDir 'agents') -Filter '*.md' | ForEach-Object {
     Write-Host "  Copied agents/$($_.Name)"
 }
 
-# Copy skills
-Copy-Item (Join-Path $RepoDir 'skills\implement\SKILL.md') `
-          (Join-Path $ClaudeDir 'skills\implement\SKILL.md') -Force
-Write-Host "  Copied skills/implement/SKILL.md"
+# Copy every skill folder (SKILL.md plus any helper scripts), skipping Python caches.
+Get-ChildItem (Join-Path $RepoDir 'skills') -Directory | ForEach-Object {
+    $dest = Join-Path $ClaudeDir "skills\$($_.Name)"
+    New-Item -ItemType Directory -Force -Path $dest | Out-Null
+    Get-ChildItem $_.FullName -File | Where-Object { $_.Extension -ne '.pyc' } | ForEach-Object {
+        Copy-Item $_.FullName (Join-Path $dest $_.Name) -Force
+    }
+    Write-Host "  Copied skills/$($_.Name)/"
+}
 
 # Generate settings.json from template, substituting paths
 $template = Get-Content (Join-Path $RepoDir 'settings-template.json') -Raw
